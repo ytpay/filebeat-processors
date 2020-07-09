@@ -49,10 +49,13 @@ func (f *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
 	}
 
 	message, ok := msg.(string)
+
 	if !ok {
 		return event, errors.New("failed to parse message")
 	}
+
 	value := r.FindString(message)
+
 	if len(value) == 0 {
 		if f.config.IgnoreMissing {
 			return event, nil
@@ -60,9 +63,12 @@ func (f *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
 			return event, errors.New("failed to parse message")
 		}
 	}
-	// Compute the hash and encode the value.
-	timestamp, _ := time.Parse("2006-01-02 15:04:05.000", value)
-	event.Timestamp = timestamp
+
+	if f.config.Target == "timestamp" {
+		timestamp, _ := time.Parse("2006-01-02 15:04:05.000", value)
+		event.Timestamp = timestamp
+	}
+
 	event.PutValue(f.config.Target, value)
 	return event, nil
 }

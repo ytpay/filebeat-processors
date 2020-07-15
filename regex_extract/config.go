@@ -1,15 +1,18 @@
-package regexextract
+package regex_extract
 
-type RegexExtractConfig struct {
+type config struct {
 	Regex         string `config:"regex"`
-	Field         string `config:"field"`
-	Target        string `config:"target"`
-	IgnoreMissing bool   `config:"ignoreMissing"`
+	SourceField   string `config:"source_field"`
+	TargetField   string `config:"target_field"`
+	IgnoreMissing bool   `config:"ignore_missing"`
+	IgnoreFailure bool   `config:"ignore_failure"`
 }
 
-var defaultRegexConfig = RegexExtractConfig{
-	Regex:         "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(?:.\\d{3}\\b)?",
-	Field:         "message",
-	Target:        "timestamp",
-	IgnoreMissing: true,
+func defaultConfig() config {
+	return config{
+		Regex:         "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(?:.\\d{3}\\b)?",
+		SourceField:   "message",
+		TargetField:   "timestamp",
+		IgnoreMissing: true,
+	}
 }

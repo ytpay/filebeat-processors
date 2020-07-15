@@ -1,4 +1,4 @@
-package regexextract
+package regex_extract
 
 import (
 	"testing"

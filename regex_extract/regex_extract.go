@@ -1,9 +1,11 @@
-package regexextract
+package regex_extract
 
 import (
 	"fmt"
 	"regexp"
 	"time"
+
+	"github.com/elastic/beats/v7/libbeat/logp"
 
 	"github.com/pkg/errors"
 
@@ -19,20 +21,31 @@ func init() {
 }
 
 type RegexExtract struct {
-	config RegexExtractConfig
+	config
+	regex *regexp.Regexp
+	log   *logp.Logger
 }
 
-const processorName = "regexExtract"
+const (
+	processorName = "regex_extract"
+	logName       = "processor.regex_extract"
+)
 
 func New(c *common.Config) (processors.Processor, error) {
-	fc := defaultRegexConfig
-	err := c.Unpack(&fc)
+	config := defaultConfig()
+	if err := c.Unpack(&config); err != nil {
+		return nil, errors.Wrapf(err, "fail to unpack the %v configuration", processorName)
+	}
+
+	regex, err := regexp.Compile(config.Regex)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to unpack regex extract config")
+		return nil, errors.Wrapf(err, "fail to compile the regex %s", config.Regex)
 	}
 
 	return &RegexExtract{
-		config: fc,
+		config: config,
+		regex:  regex,
+		log:    logp.NewLogger(logName),
 	}, nil
 }
 
@@ -40,35 +53,44 @@ func (p *RegexExtract) String() string {
 	return fmt.Sprintf("%v=[regex=[%v]]", processorName, p.config.Regex)
 }
 
-func (f *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
-	r, _ := regexp.Compile(f.config.Regex)
-	msg, err := event.GetValue(f.config.Field)
-
+func (p *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
+	msg, err := event.GetValue(p.config.SourceField)
 	if err != nil {
-		return event, errors.Wrapf(err, "could not fetch value for key: %s", f.config.Field)
+		if p.IgnoreFailure || (p.IgnoreMissing && errors.Cause(err) == common.ErrKeyNotFound) {
+			return event, nil
+		}
+		return event, errors.Wrapf(err, "could not fetch value for key: %s", p.config.SourceField)
 	}
 
 	message, ok := msg.(string)
-
 	if !ok {
+		if p.IgnoreFailure {
+			return event, nil
+		}
 		return event, errors.New("failed to parse message")
 	}
 
-	value := r.FindString(message)
-
+	value := p.regex.FindString(message)
 	if len(value) == 0 {
-		if f.config.IgnoreMissing {
+		if p.config.IgnoreMissing || p.IgnoreFailure {
 			return event, nil
 		} else {
 			return event, errors.New("failed to parse message")
 		}
 	}
 
-	if f.config.Target == "timestamp" {
+	// TODO: remove date format parsing?
+	if p.config.TargetField == "timestamp" {
 		timestamp, _ := time.Parse("2006-01-02 15:04:05.000", value)
 		event.Timestamp = timestamp
 	}
 
-	event.PutValue(f.config.Target, value)
+	_, err = event.PutValue(p.config.TargetField, value)
+	if err != nil {
+		if p.IgnoreFailure {
+			return event, nil
+		}
+		return event, errors.Wrapf(err, "failed to put event value key: %s, value: %s", p.TargetField, value)
+	}
 	return event, nil
 }

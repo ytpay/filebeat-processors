@@ -3,6 +3,7 @@ package add_filename
 import (
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -35,6 +36,18 @@ func New(cfg *common.Config) (processors.Processor, error) {
 	config := defaultConfig()
 	if err := cfg.Unpack(&config); err != nil {
 		return nil, errors.Wrapf(err, "fail to unpack the %v configuration", processorName)
+	}
+
+	if config.LogType != nil {
+		config.logTypeRex = make(map[string]*regexp.Regexp, 5)
+		for ltype, reg := range config.LogType {
+			t := ltype
+			r, err := regexp.Compile(reg)
+			if err != nil {
+				return nil, errors.Wrapf(err, "fail to compile the log type regex %s", reg)
+			}
+			config.logTypeRex[t] = r
+		}
 	}
 
 	p := &addFilename{
@@ -73,6 +86,20 @@ func (p *addFilename) Run(event *beat.Event) (*beat.Event, error) {
 			return event, nil
 		}
 		return event, errors.Wrapf(err, "failed to put event value key: %s, value: %s", p.TargetField, logFileName)
+	}
+	if p.logTypeRex != nil {
+		for ltype, regx := range p.logTypeRex {
+			if regx.FindString(logFileName) != "" {
+				_, err = event.PutValue(p.LogTypeField, ltype)
+				if err != nil {
+					if p.IgnoreFailure {
+						return event, nil
+					}
+					return event, errors.Wrapf(err, "failed to put event value key: %s, value: %t", p.ProcessorsField, true)
+				}
+				break
+			}
+		}
 	}
 
 	if p.ProcessorsField != "" {

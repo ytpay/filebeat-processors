@@ -50,16 +50,16 @@ func New(c *common.Config) (processors.Processor, error) {
 }
 
 func (p *RegexExtract) String() string {
-	return fmt.Sprintf("%v=[regex=[%v]]", processorName, p.config.Regex)
+	return fmt.Sprintf("%v=[regex=[%v]]", processorName, p.Regex)
 }
 
 func (p *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
-	msg, err := event.GetValue(p.config.SourceField)
+	msg, err := event.GetValue(p.SourceField)
 	if err != nil {
 		if p.IgnoreFailure || (p.IgnoreMissing && errors.Cause(err) == common.ErrKeyNotFound) {
 			return event, nil
 		}
-		return event, errors.Wrapf(err, "could not fetch value for key: %s", p.config.SourceField)
+		return event, errors.Wrapf(err, "could not fetch value for key: %s", p.SourceField)
 	}
 
 	message, ok := msg.(string)
@@ -72,7 +72,7 @@ func (p *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
 
 	value := p.regex.FindString(message)
 	if len(value) == 0 {
-		if p.config.IgnoreMissing || p.IgnoreFailure {
+		if p.IgnoreMissing || p.IgnoreFailure {
 			return event, nil
 		} else {
 			return event, errors.New("failed to parse message")
@@ -80,12 +80,12 @@ func (p *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
 	}
 
 	// TODO: remove date format parsing?
-	if p.config.TargetField == "timestamp" {
+	if p.TargetField == "timestamp" {
 		timestamp, _ := time.Parse("2006-01-02 15:04:05.000", value)
 		event.Timestamp = timestamp
 	}
 
-	_, err = event.PutValue(p.config.TargetField, value)
+	_, err = event.PutValue(p.TargetField, value)
 	if err != nil {
 		if p.IgnoreFailure {
 			return event, nil

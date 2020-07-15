@@ -3,7 +3,6 @@ package regex_extract
 import (
 	"fmt"
 	"regexp"
-	"time"
 
 	"github.com/elastic/beats/v7/libbeat/logp"
 
@@ -77,12 +76,6 @@ func (p *RegexExtract) Run(event *beat.Event) (*beat.Event, error) {
 		} else {
 			return event, errors.New("failed to parse message")
 		}
-	}
-
-	// TODO: remove date format parsing?
-	if p.TargetField == "timestamp" {
-		timestamp, _ := time.Parse("2006-01-02 15:04:05.000", value)
-		event.Timestamp = timestamp
 	}
 
 	_, err = event.PutValue(p.TargetField, value)

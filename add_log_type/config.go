@@ -14,7 +14,7 @@ func defaultConfig() config {
 	return config{
 		ProcessorsField: "processors.add_log_type",
 		SourceField:     "filename",
-		TargetField:     "add_log_type",
+		TargetField:     "log_type",
 		TypeMap: map[string]string{
 			".log":    "log",
 			".sqllog": "sql",

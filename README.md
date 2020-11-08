@@ -36,6 +36,7 @@ import (
 	_ "github.com/elastic/beats/v7/libbeat/publisher/includes" // Register publisher pipeline modules
 +	_ "github.com/ytpay/filebeat-processors/add_filename"
 +	_ "github.com/ytpay/filebeat-processors/add_prefix"
++	_ "github.com/ytpay/filebeat-processors/add_log_type"
 +	_ "github.com/ytpay/filebeat-processors/split_message"
 +	_ "github.com/ytpay/filebeat-processors/regex_extract"
 )

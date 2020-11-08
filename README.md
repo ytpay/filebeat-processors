@@ -35,6 +35,7 @@ import (
 	_ "github.com/elastic/beats/v7/libbeat/processors/translate_sid"
 	_ "github.com/elastic/beats/v7/libbeat/publisher/includes" // Register publisher pipeline modules
 +	_ "github.com/gozap/filebeat-processors/add_filename"
++	_ "github.com/gozap/filebeat-processors/add_prefix"
 +	_ "github.com/gozap/filebeat-processors/split_message"
 +	_ "github.com/gozap/filebeat-processors/regex_extract"
 )

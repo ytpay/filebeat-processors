@@ -1,4 +1,4 @@
-module github.com/gozap/filebeat-processors
+module github.com/ytpay/filebeat-processors
 
 go 1.14
 

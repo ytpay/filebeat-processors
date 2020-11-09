@@ -92,7 +92,7 @@ output {
     "processors" => {
         "add_filename" => true,
           "add_prefix" => true,
-+         "split_message" => true,
++      "split_message" => true,
         "add_log_type" => true
     },
     "log_prefix" => "app"

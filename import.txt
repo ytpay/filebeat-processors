@@ -1,0 +1,7 @@
+import (
+ 	_ "github.com/ytpay/filebeat-processors/add_filename"
+ 	_ "github.com/ytpay/filebeat-processors/add_prefix"
+ 	_ "github.com/ytpay/filebeat-processors/add_log_type"
+ 	_ "github.com/ytpay/filebeat-processors/split_message"
+ 	_ "github.com/ytpay/filebeat-processors/regex_extract"
+)

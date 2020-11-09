@@ -1,0 +1,15 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+
+output.console:
+  pretty: true
+
+processors:
+- add_filename: ~
+- add_prefix: ~
+- add_log_type: ~
+- split_message: ~
+- regex_extract: ~

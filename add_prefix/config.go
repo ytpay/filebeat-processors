@@ -16,5 +16,6 @@ func defaultConfig() config {
 		ProcessorsField: "processors.add_prefix",
 		SourceField:     "filename",
 		TargetField:     "log_prefix",
+		IgnoreFailure:   true,
 	}
 }

@@ -18,5 +18,6 @@ func defaultConfig() config {
 		ProcessorsField: "processors.add_filename",
 		TargetField:     "filename",
 		SourceField:     "log.file.path",
+		IgnoreFailure:   true,
 	}
 }

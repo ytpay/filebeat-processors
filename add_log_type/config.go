@@ -21,5 +21,6 @@ func defaultConfig() config {
 			".error":  "error",
 			".json":   "json",
 		},
+		IgnoreFailure: true,
 	}
 }

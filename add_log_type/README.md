@@ -31,7 +31,7 @@ processors:
       ignore_missing: true
       # 当出现一些错误时(例如上面的 source_field 找不到或者 source_field 不是个字符串等)忽略
       # 错误继续处理 event，可以将 ignore_failure 视为 ignore_missing 的更大范畴兼容
-      # 此配置默认值为 false
+      # 此配置默认值为 true
       ignore_failure: true
 ```
 

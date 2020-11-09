@@ -13,6 +13,6 @@ func defaultConfig() config {
 		Regex:         "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}(?:.\\d{3}\\b)?",
 		SourceField:   "message",
 		TargetField:   "timestamp",
-		IgnoreMissing: true,
+		IgnoreFailure: true,
 	}
 }

@@ -9,13 +9,13 @@
 ``` yaml
 processors:
   - add_filename:
-      # 源字段，add_filename processor 从次字段读取到一个绝对路径，然后提取文件名
+      # 源字段，add_filename processor 从此字段读取到一个绝对路径，然后提取文件名
       # 此配置默认值为 "log.file.path"
       source_field: "log.file.path"
-      # 目标字段，add_filename processor 将文件名提取成功后写入目标字段
+      # 目标字段，add_filename processor 将文件名提取成功后写入该字段
       # 为保证不会覆盖其他 processor 或系统生成字段，推荐将其放入特定结构字段下
       # 此配置默认值为 "filename"，即 event 根路径下的 "filename"
-      target_field: "custom.filename"
+      target_field: "filename"
       # processor 标记位，add_filename processor 处理成功后会将此字段设置为 true
       # 通常该字段用于标识作用，方便后面的 logstash 判断 event 是否被某个 processor 处理过
       # 此配置默认值为 "processors.add_filename"
@@ -33,7 +33,7 @@ processors:
       # 此配置默认值为 false
       ignore_missing: true
       # 当出现一些错误时(例如上面的 source_field 找不到或者 source_field 不是个字符串等)忽略
-      # 错误继续出 event，可以将 ignore_failure 视为 ignore_missing 的更大范畴兼容
+      # 错误继续处理 event，可以将 ignore_failure 视为 ignore_missing 的更大范畴兼容
       # 此配置默认值为 false
       ignore_failure: true
 ```

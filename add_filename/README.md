@@ -52,7 +52,7 @@ output {
 
 如果 add_filename processor 处理成功后应该可以在 logstash 控制台看到 `target_filed` 字段
 
-``` ruby
+``` diff
 {
            "ecs" => {
         "version" => "1.5.0"
@@ -62,7 +62,7 @@ output {
     ],
        "message" => "2020-11-09 11:54:09.687 app-78b956cf7f-rtk7w [http-nio-8080-exec-9] INFO  c.y.m.i.AuthenticationInterceptor.preHandle - allow request"
       "@version" => "1",
-      "filename" => "app.2020-11-09.micro-app-78b956cf7f-rtk7w.log",
++     "filename" => "app.2020-11-09.micro-app-78b956cf7f-rtk7w.log",
           "file" => {
             "path" => "/data/logs/app/app.2020-11-09.micro-app-78b956cf7f-rtk7w.log"
         },
@@ -82,7 +82,7 @@ output {
     },
       "log_type" => "log",
     "processors" => {
-        "add_filename" => true,
++       "add_filename" => true,
           "add_prefix" => true,
         "add_log_type" => true
     },

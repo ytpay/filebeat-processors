@@ -4,10 +4,17 @@
 
 ## 一、编译
 
+### 1.1、Docker 编译
+
+在安装好 docker 的 Linux 机器上，执行目录下的 `build.sh` 既可完成编译，编译完成二进制文件存放在 `build` 目录中。
+
+### 1.2、手动编译
+
+- 确保配置好相关 go 开发环境
 - clone 官方 beats 仓库源码
 - 编辑 `libbeat/cmd/instance/imports_common.go` 文件
 - 将本仓库 processor 添加到包引入位置
-- 进入 `beasts/filebeat` 目录执行 `make` 进行编译
+- 进入 `beasts/filebeat` 目录执行 `make crosscompile` 进行编译
 
 修改样例:
 
@@ -44,18 +51,10 @@ import (
 
 ## 二、配置
 
-目前所有 processor 的可用配置请参考每个目录下的 `config.go` 中的 `config` 结构体；例如:
+关于每个 processor 的具体配置请查看 processor 目录下的 README.md 文档，以下为 processor 列表:
 
-``` go
-type config struct {
-	EnableTimestamp bool   `config:"enable_timestamp"`
-	TimestampFormat string `config:"timestamp_format"`
-	ProcessorsField string `config:"processors_field"`
-	SourceField     string `config:"source_field"`
-	TargetField     string `config:"target_field"`
-	IgnoreMissing   bool   `config:"ignore_missing"`
-	IgnoreFailure   bool   `config:"ignore_failure"`
-}
-```
-
-其中 `defaultConfig` 方法为相关参数的默认值
+- [add_filename](https://github.com/ytpay/filebeat-processors/blob/master/add_filename/README.md)
+- [add_log_type](https://github.com/ytpay/filebeat-processors/blob/master/add_log_type/README.md)
+- [add_prefix](https://github.com/ytpay/filebeat-processors/blob/master/add_prefix/README.md)
+- [regex_extract](https://github.com/ytpay/filebeat-processors/blob/master/regex_extract/README.md)
+- [split_message](https://github.com/ytpay/filebeat-processors/blob/master/split_message/README.md)

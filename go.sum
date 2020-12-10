@@ -154,8 +154,8 @@ github.com/eapache/go-resiliency v1.2.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5m
 github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21/go.mod h1:+020luEh2TKB4/GOp8oxxtq0Daoen/Cii55CzbTV6DU=
 github.com/eapache/queue v1.1.0/go.mod h1:6eCeP0CKFpHLu8blIFXhExK/dRa7WDZfr6jVFPTqq+I=
 github.com/eclipse/paho.mqtt.golang v1.2.1-0.20200121105743-0d940dd29fd2/go.mod h1:H9keYFcgq3Qr5OUJm/JZI/i6U7joQ8SYLhZwfeOo6Ts=
-github.com/elastic/beats/v7 v7.10.0 h1:MpXREz0PzwuHpJnNAHcjmRoQRfVUnJFJvYQdzRjBZKg=
-github.com/elastic/beats/v7 v7.10.0/go.mod h1:GV6Gy80eRYpJ4Dk4MZcQFMxXbmOnWrj9ZPK5UhwCkhU=
+github.com/elastic/beats/v7 v7.10.1 h1:frShR6AnMQ07GhSsDw9TTFlbAZo9TsASsA/Y5zSgo8o=
+github.com/elastic/beats/v7 v7.10.1/go.mod h1:GV6Gy80eRYpJ4Dk4MZcQFMxXbmOnWrj9ZPK5UhwCkhU=
 github.com/elastic/dhcp v0.0.0-20200227161230-57ec251c7eb3/go.mod h1:aPqzac6AYkipvp4hufTyMj5PDIphF3+At8zr7r51xjY=
 github.com/elastic/ecs v1.6.0/go.mod h1:pgiLbQsijLOJvFR8OTILLu0Ni/R/foUNg0L+T6mU9b4=
 github.com/elastic/elastic-agent-client/v7 v7.0.0-20200709172729-d43b7ad5833a/go.mod h1:uh/Gj9a0XEbYoM4NYz4LvaBVARz3QXLmlNjsrKY9fTc=

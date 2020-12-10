@@ -3,7 +3,7 @@ module github.com/ytpay/filebeat-processors
 go 1.15
 
 require (
-	github.com/elastic/beats/v7 v7.10.0
+	github.com/elastic/beats/v7 v7.10.1
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.6.1
 )

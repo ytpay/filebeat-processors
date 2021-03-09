@@ -1,4 +1,4 @@
-name: Build Filebeat Processor
+name: Build Filebeat Processors
 on:
   push:
     branches:
@@ -9,8 +9,15 @@ jobs:
     name: "Build Filebeat"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Processors
         uses: actions/checkout@v2
+      - name: Read Filebeat Version
+        run: "echo FILEBEAT_VERSION=$(cat filebeat_version) >> $GITHUB_ENV"
+      - name: Checkout Filebeat
+        uses: actions/checkout@v2
+        with:
+          repository: 'https://github.com/elastic/beats.git'
+          ref: env.FILEBEAT_VERSION
       - name: "Setup Golang"
         uses: actions/setup-go@v2
         with:

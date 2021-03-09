@@ -31,7 +31,7 @@ jobs:
       - name: "Build Processor"
         working-directory: ./beats
         run: |
-          git checkout -b ${FILEBEAT_VERSION} ${FILEBEAT_VERSION}
+          git checkout -b $FILEBEAT_VERSION $FILEBEAT_VERSION
           cat ../filebeat-processors/import.txt >> libbeat/cmd/instance/imports_common.go
           go get github.com/ytpay/filebeat-processors@$GITHUB_SHA
           (cd filebeat && make crosscompile)

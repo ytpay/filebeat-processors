@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout Processors
         uses: actions/checkout@v2
+        with:
+          repository: 'ytpay/filebeat-processors'
+          path: 'filebeat-processors'
+          submodules: 'true'
       - name: Read Filebeat Version
         run: "echo FILEBEAT_VERSION=$(cat filebeat-version) >> $GITHUB_ENV"
       - name: Checkout Filebeat
@@ -18,9 +22,16 @@ jobs:
         with:
           repository: 'elastic/beats'
           ref: "${{ env.FILEBEAT_VERSION }}"
+          path: 'beats'
+          submodules: 'true'
       - name: "Setup Golang"
         uses: actions/setup-go@v2
         with:
           stable: 'true'
       - name: "Build Processor"
-        run: bash ./filebeat-processors/.compile.sh
+        working-directory: ./beats
+        run: |
+          git checkout -b ${FILEBEAT_VERSION} ${FILEBEAT_VERSION}
+          cat ../filebeat-processors/import.txt >> libbeat/cmd/instance/imports_common.go
+          go get github.com/ytpay/filebeat-processors@$GITHUB_SHA
+          (cd filebeat && make crosscompile)

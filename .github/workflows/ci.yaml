@@ -30,7 +30,7 @@ jobs:
       - name: "Setup Golang"
         uses: actions/setup-go@v2
         with:
-          go-versio: '^1.16.0'
+          go-version: '^1.16.0'
       - name: "Install gox"
         working-directory: "${{ env.GITHUB_WORKSPACE }}"
         run: |

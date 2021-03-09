@@ -8,6 +8,8 @@ jobs:
   build:
     name: "Build Filebeat"
     runs-on: ubuntu-latest
+    env:
+      GO111MODULE: 'on'
     steps:
       - name: Checkout Processors
         uses: actions/checkout@v2

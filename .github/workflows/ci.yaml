@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'elastic/beats'
-          ref: env.FILEBEAT_VERSION
+          ref: "$FILEBEAT_VERSION"
       - name: "Setup Golang"
         uses: actions/setup-go@v2
         with:

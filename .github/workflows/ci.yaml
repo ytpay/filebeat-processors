@@ -2,9 +2,7 @@ name: Build Filebeat Processor
 on:
   push:
     branches:
-      - 'v*'
-    tags:
-      - 'v*'
+      - 'master'
 
 jobs:
   build:

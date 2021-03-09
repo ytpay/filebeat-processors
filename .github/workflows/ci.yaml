@@ -12,11 +12,11 @@ jobs:
       - name: Checkout Processors
         uses: actions/checkout@v2
       - name: Read Filebeat Version
-        run: "echo FILEBEAT_VERSION=$(cat filebeat_version) >> $GITHUB_ENV"
+        run: "echo FILEBEAT_VERSION=$(cat filebeat-version) >> $GITHUB_ENV"
       - name: Checkout Filebeat
         uses: actions/checkout@v2
         with:
-          repository: 'https://github.com/elastic/beats.git'
+          repository: 'elastic/beats'
           ref: env.FILEBEAT_VERSION
       - name: "Setup Golang"
         uses: actions/setup-go@v2

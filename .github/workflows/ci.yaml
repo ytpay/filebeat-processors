@@ -23,4 +23,4 @@ jobs:
         with:
           stable: 'true'
       - name: "Build Processor"
-        run: bash .compile.sh
+        run: bash ./filebeat-processors/.compile.sh

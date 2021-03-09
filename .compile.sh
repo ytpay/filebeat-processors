@@ -3,8 +3,8 @@
 set -ex
 
 # create source dir
-mkdir -p /go/src/github.com/elastic
-cd /go/src/github.com/elastic
+mkdir -p ${HOME}/go/src/github.com/elastic
+cd ${HOME}/go/src/github.com/elastic
 
 # get source code
 apt update \
@@ -13,14 +13,14 @@ apt update \
   && git clone https://github.com/elastic/beats.git
 
 # checkout
-cd /go/src/github.com/elastic/beats
+cd ${HOME}/go/src/github.com/elastic/beats
 git checkout -b ${VERSION} ${VERSION}
 
 # add custom processors
-cat /tmp/import.txt >> libbeat/cmd/instance/imports_common.go
+cat ${HOME}/filebeat-processors/import.txt >> libbeat/cmd/instance/imports_common.go
 
 # build
-cd filebeat && make crosscompile && mv build/bin/* /build
+cd filebeat && make crosscompile && mv build/bin/* ${HOME}/build
 
 # test processors
-/build/filebeat-linux-amd64 test config -c /filebeat-test.yml
+${HOME}/build/filebeat-linux-amd64 test config -c ${HOME}/filebeat-processors/filebeat-test.yml

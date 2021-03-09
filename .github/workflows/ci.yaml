@@ -29,6 +29,10 @@ jobs:
         uses: actions/setup-go@v2
         with:
           stable: 'true'
+      - name: "Install gox"
+        working-directory: "${{ env.GITHUB_WORKSPACE }}"
+        run: |
+          go install github.com/mitchellh/gox@latest
       - name: "Build Processor"
         working-directory: ./beats
         run: |

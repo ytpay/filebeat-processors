@@ -42,12 +42,12 @@ jobs:
           cat ../filebeat-processors/import.txt >> libbeat/cmd/instance/imports_common.go
           go get github.com/ytpay/filebeat-processors@${GITHUB_SHA}
           (cd filebeat && make crosscompile && mv build/bin ${GITHUB_WORKSPACE}/artifacts)
-          echo "ARTIFACTS_PATH=${GITHUB_WORKSPACE}/artifacts" >> ${GITHUB_ENV}
+          echo "ARTIFACTS_PATH=${GITHUB_WORKSPACE}/artifacts/*" >> ${GITHUB_ENV}
       - name: "Create Release"
         uses: ncipollo/release-action@v1
         with:
           name: "Bump ${{ env.FILEBEAT_VERSION }}"
           tag: "${{ env.FILEBEAT_VERSION }}"
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifact: "${{ env.ARTIFACTS_PATH }}"
+          artifacts: "${{ env.ARTIFACTS_PATH }}"
           allowUpdates: 'true'
